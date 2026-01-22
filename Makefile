@@ -13,6 +13,6 @@ migrate-up:
 migrate-down:
 	@migrate -path=$(MIGRATIONS_PATH) -database=$(DB_MIGRATOR_ADDR) down $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: up
-up:
+.PHONY: docker-up
+docker-up:
 	docker compose up
