@@ -16,3 +16,7 @@ migrate-down:
 .PHONY: docker-up
 docker-up:
 	docker compose up
+
+.PHONY: seed
+seed:
+	@go run cmd/migrate/seed/main.go

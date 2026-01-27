@@ -13,7 +13,7 @@ type User struct {
 	ID       int64  `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
-	Email    int64  `json:"email"`
+	Email    string `json:"email"`
 	CreateAt string `json:"created_at"`
 }
 
