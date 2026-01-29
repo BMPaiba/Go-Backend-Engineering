@@ -42,6 +42,7 @@ func (app *application) mount() http.Handler {
 
 	r.Route("/v1", func(r chi.Router) {
 		r.Get("/health", app.healthCheckHandler)
+
 		r.Route("/posts", func(r chi.Router) {
 			r.Post("/", app.createPostHandler)
 			r.Route("/{postID}", func(r chi.Router) {
@@ -49,6 +50,15 @@ func (app *application) mount() http.Handler {
 				r.Get("/", app.getPostHandler)
 				r.Patch("/", app.updatePostHandler)
 				r.Delete("/", app.deletePostHandler)
+			})
+		})
+
+		r.Route("/users", func(r chi.Router) {
+			r.Route("/{userID}", func(r chi.Router) {
+				r.Use(app.userContextMiddleware)
+				r.Get("/", app.getUserHandler)
+				r.Put("/follow", app.followerUserHandler)
+				r.Put("/unfollow", app.unfollowUserHandler)
 			})
 		})
 	})

@@ -22,7 +22,6 @@ func (s *UserStore) Create(ctx context.Context, user *User) error {
 	query := `
 		INSERT INTO users (username, password, email) VALUES($1, $2, $3) RETURNING id, created_at
 	`
-
 	err := s.db.QueryRowContext(
 		ctx,
 		query,
@@ -33,10 +32,39 @@ func (s *UserStore) Create(ctx context.Context, user *User) error {
 		&user.ID,
 		&user.Email,
 	)
-
 	if err != nil {
 		return err
 	}
-
 	return nil
+}
+
+func (s *UserStore) GetById(ctx context.Context, userID int64) (*User, error) {
+
+	query := `
+		SELECT id, username, email, password, created_at
+		FROM users
+		WHERE id = $1
+	`
+	user := &User{}
+	err := s.db.QueryRowContext(
+		ctx,
+		query,
+		userID,
+	).Scan(
+		&user.ID,
+		&user.Username,
+		&user.Email,
+		&user.Password,
+		&user.CreateAt,
+	)
+	if err != nil {
+		switch err {
+		case sql.ErrNoRows:
+			return nil, ErrNotFound
+		default:
+			return nil, err
+		}
+	}
+
+	return user, nil
 }
