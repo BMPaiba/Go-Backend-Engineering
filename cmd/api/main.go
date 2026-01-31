@@ -8,10 +8,28 @@ import (
 	"github.com/BMPaiba/Go-Backend-Engineering/internal/store"
 )
 
+//	@title			GopherSocial API
+//	@description	This is a course.
+//	@termsOfService	http://swagger.io/terms/
+
+//	@contact.name	API Support
+//	@contact.url	http://www.swagger.io/support
+//	@contact.email	support@swagger.io
+
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @BasePath					/v1
+// @securityDefinitions.apikey	ApiKeyAuth
+// @in							header
+// @name						Authorization
+// @description
 func main() {
+	log.SetFlags(log.Lshortfile)
 
 	cfg := config{
-		addr: env.GetString("ADDR", ":3000"),
+		addr:   env.GetString("ADDR", ":3000"),
+		apiURL: env.GetString("EXTERNAL_URL", "localhost:3000"),
 		db: dbConfig{
 			addr:         env.GetString("DB_ADDR", "postgres://admin:adminpassword@localhost/social?sslmode=disable"),
 			maxOpenConns: env.GetInt("DB_MAX_OPEN_CONNS", 30),
