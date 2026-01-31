@@ -1,4 +1,4 @@
 ALTER TABLE posts
-DROP COLUMN tags:
+DROP COLUMN tags
 ALTER TABLE posts
-DROP COLUMN updated_at:
+DROP COLUMN updated_at
